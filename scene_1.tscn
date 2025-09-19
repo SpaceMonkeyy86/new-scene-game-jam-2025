@@ -1,9 +1,14 @@
-[gd_scene load_steps=4 format=3 uid="uid://b2hcjbtmi61t0"]
+[gd_scene load_steps=7 format=3 uid="uid://b2hcjbtmi61t0"]
+
+[ext_resource type="Script" uid="uid://cdpa4roxlubnf" path="res://CharacterController.gd" id="1_3sd7o"]
+[ext_resource type="Texture2D" uid="uid://bnhd0n38fog5y" path="res://icon.svg" id="2_3xosi"]
+
+[sub_resource type="PhysicsMaterial" id="PhysicsMaterial_3xosi"]
 
 [sub_resource type="Gradient" id="Gradient_icno0"]
 interpolation_mode = 1
 offsets = PackedFloat32Array(0, 0.7)
-colors = PackedColorArray(0, 0, 0, 1, 1, 1, 1, 0)
+colors = PackedColorArray(1, 0, 0, 1, 1, 1, 1, 0)
 
 [sub_resource type="GradientTexture2D" id="GradientTexture2D_3sd7o"]
 gradient = SubResource("Gradient_icno0")
@@ -11,18 +16,26 @@ fill = 1
 fill_from = Vector2(0.5, 0.5)
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_3xosi"]
-radius = 29.51
 
 [node name="Scene1" type="Node2D"]
 
-[node name="Character" type="Node2D" parent="."]
-
-[node name="Camera2D" type="Camera2D" parent="Character"]
+[node name="Character" type="RigidBody2D" parent="."]
+physics_material_override = SubResource("PhysicsMaterial_3xosi")
+script = ExtResource("1_3sd7o")
 
 [node name="Sprite2D" type="Sprite2D" parent="Character"]
 texture = SubResource("GradientTexture2D_3sd7o")
 
-[node name="RigidBody2D" type="RigidBody2D" parent="Character"]
-
-[node name="CollisionShape2D" type="CollisionShape2D" parent="Character/RigidBody2D"]
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Character"]
 shape = SubResource("CircleShape2D_3xosi")
+
+[node name="CanvasLayer" type="CanvasLayer" parent="."]
+layer = -1
+
+[node name="Sprite2D" type="Sprite2D" parent="CanvasLayer"]
+texture_repeat = 2
+texture = ExtResource("2_3xosi")
+region_enabled = true
+region_rect = Rect2(0, 0, 10000, 10000)
+
+[node name="Camera2D" type="Camera2D" parent="."]
