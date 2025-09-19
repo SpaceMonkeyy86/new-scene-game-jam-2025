@@ -1,13 +1,12 @@
 extends RigidBody2D
 
-@export var speed = 400
+@export var jump_velocity = 600
+@export var gravity = 1.0
 
-func _process(delta):
-	print(position)
-	if Input.is_mouse_button_pressed(MOUSE_BUTTON_LEFT):
-		set_axis_velocity(Vector2.ZERO)
-		apply_force(Vector2.UP * speed * delta)
-
-func _integrate_forces(state):
-	if Input.is_mouse_button_pressed(MOUSE_BUTTON_LEFT):
-		state.linear_velocity = Vector2.UP * speed
+func _process(_delta):
+	if Input.is_action_just_pressed("click"):
+		linear_velocity = Vector2.ZERO
+		gravity_scale = 0
+	elif Input.is_action_just_released("click"):
+		linear_velocity = Vector2.UP * jump_velocity
+		gravity_scale = gravity
