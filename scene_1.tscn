@@ -1,7 +1,8 @@
-[gd_scene load_steps=7 format=3 uid="uid://b2hcjbtmi61t0"]
+[gd_scene load_steps=8 format=3 uid="uid://b2hcjbtmi61t0"]
 
 [ext_resource type="Script" uid="uid://cdpa4roxlubnf" path="res://CharacterController.gd" id="1_3sd7o"]
 [ext_resource type="Texture2D" uid="uid://bnhd0n38fog5y" path="res://icon.svg" id="2_3xosi"]
+[ext_resource type="PackedScene" uid="uid://cq5xql4fe4gl5" path="res://wall.tscn" id="3_1abo5"]
 
 [sub_resource type="PhysicsMaterial" id="PhysicsMaterial_3xosi"]
 
@@ -15,19 +16,20 @@ gradient = SubResource("Gradient_icno0")
 fill = 1
 fill_from = Vector2(0.5, 0.5)
 
-[sub_resource type="CircleShape2D" id="CircleShape2D_3xosi"]
+[sub_resource type="CircleShape2D" id="CircleShape2D_1abo5"]
 
 [node name="Scene1" type="Node2D"]
 
 [node name="Character" type="RigidBody2D" parent="."]
 physics_material_override = SubResource("PhysicsMaterial_3xosi")
+lock_rotation = true
 script = ExtResource("1_3sd7o")
 
 [node name="Sprite2D" type="Sprite2D" parent="Character"]
 texture = SubResource("GradientTexture2D_3sd7o")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Character"]
-shape = SubResource("CircleShape2D_3xosi")
+shape = SubResource("CircleShape2D_1abo5")
 
 [node name="Camera2D" type="Camera2D" parent="Character"]
 
@@ -37,3 +39,21 @@ texture_repeat = 2
 texture = ExtResource("2_3xosi")
 region_enabled = true
 region_rect = Rect2(0, 0, 10000, 10000)
+
+[node name="Terrain" type="Node2D" parent="."]
+
+[node name="Wall" parent="Terrain" instance=ExtResource("3_1abo5")]
+position = Vector2(25, 310)
+scale = Vector2(141.51268, 4.8887)
+
+[node name="Wall2" parent="Terrain" instance=ExtResource("3_1abo5")]
+position = Vector2(35, -1080)
+scale = Vector2(141.51268, 4.8887)
+
+[node name="Wall3" parent="Terrain" instance=ExtResource("3_1abo5")]
+position = Vector2(1391.9998, -352)
+scale = Vector2(9.282445, 78.70099)
+
+[node name="Wall4" parent="Terrain" instance=ExtResource("3_1abo5")]
+position = Vector2(-1347.9995, -377.00003)
+scale = Vector2(9.282445, 78.70099)

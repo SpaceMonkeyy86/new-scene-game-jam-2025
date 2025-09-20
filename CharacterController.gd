@@ -32,6 +32,5 @@ func calc_jump_vector(offset: Vector2) -> Vector2:
 	v *= jump_multiplier
 	if v.length() > max_jump_magnitude:
 		v = v.normalized() * max_jump_magnitude
-	print(offset, v, v.length())
 	return v
 	

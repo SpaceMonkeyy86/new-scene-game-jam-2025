@@ -1,0 +1,24 @@
+[gd_scene load_steps=5 format=3 uid="uid://cq5xql4fe4gl5"]
+
+[sub_resource type="Gradient" id="Gradient_oh6kn"]
+colors = PackedColorArray(1, 1, 1, 1, 1, 1, 1, 1)
+
+[sub_resource type="GradientTexture2D" id="GradientTexture2D_xxgf6"]
+gradient = SubResource("Gradient_oh6kn")
+width = 20
+height = 20
+
+[sub_resource type="PhysicsMaterial" id="PhysicsMaterial_oh6kn"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_xxgf6"]
+
+[node name="Wall" type="Node2D"]
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+texture = SubResource("GradientTexture2D_xxgf6")
+
+[node name="StaticBody2D" type="StaticBody2D" parent="."]
+physics_material_override = SubResource("PhysicsMaterial_oh6kn")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="StaticBody2D"]
+shape = SubResource("RectangleShape2D_xxgf6")
