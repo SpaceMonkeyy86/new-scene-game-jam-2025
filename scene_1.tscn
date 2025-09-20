@@ -1,8 +1,9 @@
-[gd_scene load_steps=8 format=3 uid="uid://b2hcjbtmi61t0"]
+[gd_scene load_steps=9 format=3 uid="uid://b2hcjbtmi61t0"]
 
 [ext_resource type="Script" uid="uid://cdpa4roxlubnf" path="res://CharacterController.gd" id="1_3sd7o"]
 [ext_resource type="Texture2D" uid="uid://bnhd0n38fog5y" path="res://icon.svg" id="2_3xosi"]
 [ext_resource type="PackedScene" uid="uid://cq5xql4fe4gl5" path="res://wall.tscn" id="3_1abo5"]
+[ext_resource type="PackedScene" uid="uid://daxan30h7dmwp" path="res://ledge.tscn" id="4_knagl"]
 
 [sub_resource type="PhysicsMaterial" id="PhysicsMaterial_3xosi"]
 
@@ -23,7 +24,13 @@ fill_from = Vector2(0.5, 0.5)
 [node name="Character" type="RigidBody2D" parent="."]
 physics_material_override = SubResource("PhysicsMaterial_3xosi")
 lock_rotation = true
+contact_monitor = true
+max_contacts_reported = 10
 script = ExtResource("1_3sd7o")
+jump_multiplier = null
+max_jump_magnitude = null
+camera_panning = null
+camera_reset_speed = null
 
 [node name="Sprite2D" type="Sprite2D" parent="Character"]
 texture = SubResource("GradientTexture2D_3sd7o")
@@ -35,6 +42,7 @@ shape = SubResource("CircleShape2D_1abo5")
 
 [node name="Background" type="Sprite2D" parent="."]
 show_behind_parent = true
+z_index = -100
 texture_repeat = 2
 texture = ExtResource("2_3xosi")
 region_enabled = true
@@ -57,3 +65,8 @@ scale = Vector2(9.282445, 78.70099)
 [node name="Wall4" parent="Terrain" instance=ExtResource("3_1abo5")]
 position = Vector2(-1347.9995, -377.00003)
 scale = Vector2(9.282445, 78.70099)
+
+[node name="Ledge" parent="Terrain" instance=ExtResource("4_knagl")]
+z_index = -10
+position = Vector2(-0.00012207031, -1)
+scale = Vector2(140.64, 2.6800003)

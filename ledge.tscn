@@ -1,0 +1,22 @@
+[gd_scene load_steps=4 format=3 uid="uid://daxan30h7dmwp"]
+
+[sub_resource type="Gradient" id="Gradient_oh6kn"]
+colors = PackedColorArray(1, 1, 0, 1, 1, 1, 0, 1)
+
+[sub_resource type="GradientTexture2D" id="GradientTexture2D_4gjuf"]
+gradient = SubResource("Gradient_oh6kn")
+width = 20
+height = 20
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_3gvxi"]
+
+[node name="Ledge" type="Node2D"]
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+texture = SubResource("GradientTexture2D_4gjuf")
+
+[node name="Area2D" type="Area2D" parent="."]
+z_index = -10
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Area2D"]
+shape = SubResource("RectangleShape2D_3gvxi")
