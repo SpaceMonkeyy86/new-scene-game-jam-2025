@@ -29,13 +29,11 @@ texture = SubResource("GradientTexture2D_3sd7o")
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Character"]
 shape = SubResource("CircleShape2D_3xosi")
 
-[node name="CanvasLayer" type="CanvasLayer" parent="."]
-layer = -1
+[node name="Camera2D" type="Camera2D" parent="Character"]
 
-[node name="Sprite2D" type="Sprite2D" parent="CanvasLayer"]
+[node name="Background" type="Sprite2D" parent="."]
+show_behind_parent = true
 texture_repeat = 2
 texture = ExtResource("2_3xosi")
 region_enabled = true
 region_rect = Rect2(0, 0, 10000, 10000)
-
-[node name="Camera2D" type="Camera2D" parent="."]
