@@ -1,6 +1,6 @@
 extends RigidBody2D
 
-@export var jump_velocity: float = 150
+@export var jump_multiplier: float = 150
 @export var max_jump_magnitude: float = 1000
 @export var camera_panning: float = 0.3
 @export var camera_reset_speed: float = 20
@@ -29,7 +29,7 @@ func calc_jump_vector(offset: Vector2) -> Vector2:
 	var v = offset
 	v.x = log(absf(v.x)+1) * (-1 if v.x < 0 else 1)
 	v.y = log(absf(v.y)+1) * (-1 if v.y < 0 else 1)
-	v *= jump_velocity
+	v *= jump_multiplier
 	if v.length() > max_jump_magnitude:
 		v = v.normalized() * max_jump_magnitude
 	print(offset, v, v.length())
