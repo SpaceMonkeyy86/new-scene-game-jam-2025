@@ -10,10 +10,11 @@ config_version=5
 
 [application]
 
-config/name="New Scene Game Jam 2025"
+config/name="Pitfall"
 run/main_scene="uid://b2hcjbtmi61t0"
 config/features=PackedStringArray("4.5", "Forward Plus")
-config/icon="res://icon.svg"
+boot_splash/image="uid://pdnmhvjtjdp6"
+config/icon="uid://pdnmhvjtjdp6"
 
 [editor]
 
