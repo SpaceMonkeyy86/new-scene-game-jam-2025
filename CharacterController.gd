@@ -2,7 +2,7 @@ extends RigidBody2D
 
 @export var jump_velocity: float = 150
 @export var max_jump_magnitude: float = 1000
-@export var camera_panning: float = 0.3
+@export var camera_panning: float = 0.2
 @export var camera_reset_speed: float = 20
 @export var bonk_velocity: float = 10
 
@@ -13,6 +13,33 @@ var hint_positions: Array[Vector2] = []
 
 var project_gravity = ProjectSettings.get_setting("physics/2d/default_gravity")
 var body_gravity = project_gravity * gravity_scale
+
+func with_parent(node) -> bool:
+	return node.find_parent("Ledge")
+
+func _physics_process(delta: float) -> void:
+	var mouse_pos: Vector2 = get_viewport().get_mouse_position()
+
+	var colliding = null
+	for body in get_colliding_bodies():
+		if body.find_parent("Ledge"):
+			colliding = body.find_parent("Ledge")
+		
+	if colliding:
+		print(colliding)
+		print(Input.is_action_pressed("click") and colliding)
+		
+	if Input.is_action_pressed("click") and colliding:
+		linear_velocity = Vector2(0, 1)
+		
+	if Input.is_action_just_pressed("click"):
+		click_position = mouse_pos
+
+	elif Input.is_action_just_released("click") and click_position:
+		freeze = false
+		linear_velocity = Vector2.ZERO
+		apply_impulse(calc_jump_vector(click_position - mouse_pos))
+		click_position = null
 
 func _process(_delta):
 	hint_positions.clear()
@@ -30,27 +57,6 @@ func _process(_delta):
 		$Camera2D.offset = $Camera2D.offset.move_toward(Vector2.ZERO, camera_reset_speed)
 	
 	queue_redraw()
-	
-	if Input.is_action_just_pressed("click"):
-		var ledge = false
-		for body in get_colliding_bodies():
-			print(body)
-			if body.find_parent("Ledge") or body.find_parent("Wall"):
-				ledge = true
-				break
-		if ledge:
-			linear_velocity = Vector2.ZERO
-			freeze = true
-			click_position = mouse_pos
-		else:
-			linear_velocity.x = maxf(linear_velocity.x, bonk_velocity)
-			linear_velocity.y = bonk_velocity
-	
-	elif Input.is_action_just_released("click") and click_position:
-		freeze = false
-		linear_velocity = Vector2.ZERO
-		apply_impulse(calc_jump_vector(click_position - mouse_pos))
-		click_position = null
 
 func calc_jump_vector(offset: Vector2) -> Vector2:
 	var v = offset
@@ -64,5 +70,5 @@ func calc_jump_vector(offset: Vector2) -> Vector2:
 func _draw():
 	var i: float = num_hints
 	for pos in hint_positions:
-		draw_circle(to_local(pos), 10, Color(1, 1, 1, i / num_hints))
+		draw_circle(to_local(pos), 10, Color(1, 1, 1, 0.5 + i / num_hints))
 		i -= 1
