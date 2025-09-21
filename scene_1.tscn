@@ -1,4 +1,4 @@
-[gd_scene load_steps=12 format=3 uid="uid://b2hcjbtmi61t0"]
+[gd_scene load_steps=13 format=3 uid="uid://b2hcjbtmi61t0"]
 
 [ext_resource type="Script" uid="uid://cdpa4roxlubnf" path="res://CharacterController.gd" id="1_3sd7o"]
 [ext_resource type="Texture2D" uid="uid://pdnmhvjtjdp6" path="res://pixilart-frames/pixil-frame-0.png" id="2_05u5g"]
@@ -9,6 +9,7 @@
 [ext_resource type="Texture2D" uid="uid://py3tj3l354kp" path="res://ground.png" id="5_cr3cd"]
 [ext_resource type="Script" uid="uid://djr0chcxeyflq" path="res://ledge_spawner.gd" id="6_05u5g"]
 [ext_resource type="Texture2D" uid="uid://b84hiibsdosew" path="res://stackable-wall.png" id="7_05u5g"]
+[ext_resource type="Texture2D" uid="uid://sm3gx7r4vxpv" path="res://rain.png" id="10_t0rxu"]
 
 [sub_resource type="PhysicsMaterial" id="PhysicsMaterial_3xosi"]
 
@@ -49,6 +50,8 @@ limit_bottom = 350
 limit_smoothed = true
 position_smoothing_enabled = true
 
+[node name="AudioStreamPlayer2D" type="AudioStreamPlayer2D" parent="Character"]
+
 [node name="Background" type="Sprite2D" parent="."]
 show_behind_parent = true
 z_index = -100
@@ -88,3 +91,16 @@ scale = Vector2(8, 11)
 texture = ExtResource("7_05u5g")
 region_enabled = true
 region_rect = Rect2(0, 0, 250, 1000)
+
+[node name="rain" type="CPUParticles2D" parent="."]
+position = Vector2(0, -12605)
+scale = Vector2(-115.033066, -45.297405)
+amount = 80
+texture = ExtResource("10_t0rxu")
+lifetime = 5.2
+emission_shape = 3
+emission_rect_extents = Vector2(7.5, 1)
+scale_amount_max = 5.0
+color = Color(0.4392157, 0.9764706, 0.9411765, 0.46666667)
+hue_variation_min = -0.2
+hue_variation_max = 0.35

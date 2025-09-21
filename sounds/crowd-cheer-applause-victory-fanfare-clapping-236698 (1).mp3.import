@@ -1,0 +1,19 @@
+[remap]
+
+importer="mp3"
+type="AudioStreamMP3"
+uid="uid://bdjc6xp1y8rbr"
+path="res://.godot/imported/crowd-cheer-applause-victory-fanfare-clapping-236698 (1).mp3-df6955d9913fe9127129c207b1724b7b.mp3str"
+
+[deps]
+
+source_file="res://sounds/crowd-cheer-applause-victory-fanfare-clapping-236698 (1).mp3"
+dest_files=["res://.godot/imported/crowd-cheer-applause-victory-fanfare-clapping-236698 (1).mp3-df6955d9913fe9127129c207b1724b7b.mp3str"]
+
+[params]
+
+loop=false
+loop_offset=0
+bpm=0
+beat_count=0
+bar_beats=4

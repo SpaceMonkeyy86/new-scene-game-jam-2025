@@ -69,3 +69,5 @@ offset_bottom = 1479.0
 theme_override_colors/font_color = Color(0.62157047, 0.93215406, 0.41099712, 1)
 theme_override_font_sizes/font_size = 150
 text = "Restart"
+
+[node name="AudioStreamPlayer2D" type="AudioStreamPlayer2D" parent="."]

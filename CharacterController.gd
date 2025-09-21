@@ -15,6 +15,10 @@ var fall2 = preload("res://pixilart-frames/pixil-frame-13.png")
 var fall3 = preload("res://pixilart-frames/pixil-frame-14.png")
 var fall4 = preload("res://pixilart-frames/pixil-frame-15.png")
 
+var bgmusic = preload("res://sounds/dark-atmosphere-with-rain-352570.mp3")
+var powerup = preload("res://sounds/01-power-up-mario.mp3")
+var powerdown = preload("res://sounds/mario-power-down.mp3")
+
 @export var jump_velocity: float = 150
 @export var max_jump_magnitude: float = 1000
 @export var bonk_velocity: float = 10
@@ -36,6 +40,13 @@ var sprite: Sprite2D = null
 var debug_mode: bool = false
 
 func _debug_toggle() -> void:
+	if debug_mode:
+		$AudioStreamPlayer2D.stream = powerdown
+	else:
+		$AudioStreamPlayer2D.stream = powerup
+		
+	$AudioStreamPlayer2D.play()
+	
 	debug_mode = !debug_mode
 
 func _ready():
@@ -110,6 +121,10 @@ func calc_ledge_window() -> float:
 
 
 func _process(_delta):
+	if !$AudioStreamPlayer2D.is_playing():
+		$AudioStreamPlayer2D.stream = bgmusic
+		$AudioStreamPlayer2D.play()
+	
 	if position.y < -12550:
 		get_tree().change_scene_to_file("res://winner.tscn")
 		get_parent().queue_free()
