@@ -1,5 +1,20 @@
 extends RigidBody2D
 
+var default = preload("res://pixilart-frames/pixil-frame-0.png")
+var windup1 = preload("res://pixilart-frames/pixil-frame-1.png")
+var windup2 = preload("res://pixilart-frames/pixil-frame-2.png")
+var windup3 = preload("res://pixilart-frames/pixil-frame-3.png")
+var launch1 = preload("res://pixilart-frames/pixil-frame-4.png")
+var launch2 = preload("res://pixilart-frames/pixil-frame-5.png")
+var launch3 = preload("res://pixilart-frames/pixil-frame-6.png")
+var launch4 = preload("res://pixilart-frames/pixil-frame-8.png")
+var land1 = preload("res://pixilart-frames/pixil-frame-9.png")
+var land2 = preload("res://pixilart-frames/pixil-frame-10.png")
+var fall1 = preload("res://pixilart-frames/pixil-frame-12.png")
+var fall2 = preload("res://pixilart-frames/pixil-frame-13.png")
+var fall3 = preload("res://pixilart-frames/pixil-frame-14.png")
+var fall4 = preload("res://pixilart-frames/pixil-frame-15.png")
+
 @export var jump_velocity: float = 150
 @export var max_jump_magnitude: float = 1000
 @export var bonk_velocity: float = 10
@@ -15,6 +30,13 @@ var body_gravity = project_gravity * gravity_scale
 var last_click_time: float = -1.0
 var ledge_catch_window: float = 0.0
 var ledge_caught: bool = false
+
+var sprite: Sprite2D = null
+
+func _ready():
+	sprite = find_child("Sprite2D")
+	if sprite == null:
+		push_error("Something went wrong... Sprite wasn't found!")
 
 func _physics_process(delta: float) -> void:
 	var mouse_pos: Vector2 = get_viewport().get_mouse_position()
@@ -79,6 +101,36 @@ func calc_ledge_window() -> float:
 func _process(_delta):
 	hint_positions.clear()
 	var mouse_pos: Vector2 = get_viewport().get_mouse_position()
+			
+	sprite.offset = Vector2(0, 0)
+	
+	if linear_velocity.x > 0:
+		sprite.flip_h = true
+	if linear_velocity.x < 0:
+		sprite.flip_h = false
+	
+	if linear_velocity.y > 700:
+		sprite.texture = fall4
+	elif linear_velocity.y > 500:
+		sprite.texture = fall3
+	elif linear_velocity.y > 300:
+		sprite.texture = fall2
+	elif linear_velocity.y > 100:
+		sprite.texture = fall1
+	elif linear_velocity.y > 0:
+		sprite.texture = land1
+	elif linear_velocity.y > -50:
+		sprite.texture = land2
+	elif linear_velocity.y > -100:
+		sprite.texture = default
+	elif linear_velocity.y > -300:
+		sprite.texture = launch1
+	elif linear_velocity.y > -600:
+		sprite.texture = launch2
+	elif linear_velocity.y > -1000:
+		sprite.texture = launch3
+	else:
+		sprite.texture = launch4
 	
 	if click_position:		
 		var vel = calc_jump_vector(click_position - mouse_pos)
@@ -86,6 +138,21 @@ func _process(_delta):
 			var t = i * 0.1
 			var pos = position + vel * t + 0.5 * Vector2(0, body_gravity) * t * t
 			hint_positions.append(pos)
+			
+		if vel.x > 0:
+			sprite.flip_h = true
+		if vel.x < 0:
+			sprite.flip_h = false
+			
+		if vel.length() / max_jump_magnitude < 0.33:
+			sprite.texture = windup1
+			sprite.offset = Vector2(0, 10)
+		elif vel.length() / max_jump_magnitude < 0.66:
+			sprite.texture = windup3
+			sprite.offset = Vector2(0, 20)
+		else:
+			sprite.texture = windup2
+			sprite.offset = Vector2(0, 30)
 	
 	queue_redraw()
 
