@@ -33,17 +33,28 @@ var ledge_caught: bool = false
 
 var sprite: Sprite2D = null
 
+var debug_mode: bool = false
+
+func _debug_toggle() -> void:
+	debug_mode = !debug_mode
+
 func _ready():
 	sprite = find_child("Sprite2D")
 	if sprite == null:
 		push_error("Something went wrong... Sprite wasn't found!")
 
+	$KonamiCode.success.connect(_debug_toggle)
+
 func _physics_process(delta: float) -> void:
+	if Input.is_action_pressed("click") and debug_mode:
+		linear_velocity = Vector2(0, -1000)
+		return
+	
 	var mouse_pos: Vector2 = get_viewport().get_mouse_position()
 
 	var colliding_ledge = false
 	var colliding_ground = false
-
+	
 	for body in get_colliding_bodies():
 		var parent = body.get_parent().name
 		if parent == "Ground":
@@ -109,7 +120,9 @@ func _process(_delta):
 	if linear_velocity.x < 0:
 		sprite.flip_h = false
 	
-	if linear_velocity.y > 700:
+	if linear_velocity.y == 0.0:
+		sprite.texture = default
+	elif linear_velocity.y > 700:
 		sprite.texture = fall4
 	elif linear_velocity.y > 500:
 		sprite.texture = fall3

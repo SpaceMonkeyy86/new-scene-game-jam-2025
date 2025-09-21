@@ -19,7 +19,7 @@ var ledge_sizes: Array[Vector2] = [
 var active_ledges: Array[Node2D] = []
 
 func _init() -> void:
-	for i in range(10):
+	for i in range(100):
 		spawn_ledge(i)
 
 func spawn_ledge(height: int) -> void:
