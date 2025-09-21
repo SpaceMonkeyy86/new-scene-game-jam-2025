@@ -1,9 +1,7 @@
 extends RigidBody2D
 
 @export var jump_velocity: float = 150
-@export var max_jump_magnitude: float = 3000
-@export var camera_panning: float = 0.2
-@export var camera_reset_speed: float = 20
+@export var max_jump_magnitude: float = 1000
 @export var bonk_velocity: float = 10
 
 var click_position = null
@@ -28,7 +26,7 @@ func _physics_process(delta: float) -> void:
 		var parent = body.get_parent().name
 		if parent == "Ground":
 			colliding_ground = true
-		elif parent == "Ledge":
+		elif parent.match("Ledge*"):
 			colliding_ledge = true
 
 	if not (colliding_ledge or colliding_ground or ledge_caught):

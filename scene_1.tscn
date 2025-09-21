@@ -1,9 +1,11 @@
-[gd_scene load_steps=10 format=3 uid="uid://b2hcjbtmi61t0"]
+[gd_scene load_steps=11 format=3 uid="uid://b2hcjbtmi61t0"]
 
 [ext_resource type="Script" uid="uid://cdpa4roxlubnf" path="res://CharacterController.gd" id="1_3sd7o"]
 [ext_resource type="Texture2D" uid="uid://bnhd0n38fog5y" path="res://icon.svg" id="2_3xosi"]
 [ext_resource type="PackedScene" path="res://wall.tscn" id="3_1abo5"]
-[ext_resource type="PackedScene" path="res://ledge.tscn" id="4_knagl"]
+[ext_resource type="PackedScene" uid="uid://djljkvc2nhwmf" path="res://ledge.tscn" id="4_knagl"]
+[ext_resource type="PackedScene" uid="uid://beraiaavb7ojo" path="res://ledge_spawner.tscn" id="5_4nmru"]
+[ext_resource type="Script" uid="uid://djr0chcxeyflq" path="res://ledge_spawner.gd" id="6_05u5g"]
 
 [sub_resource type="PhysicsMaterial" id="PhysicsMaterial_3xosi"]
 
@@ -19,8 +21,6 @@ fill_from = Vector2(0.5, 0.5)
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_1abo5"]
 
-[sub_resource type="RectangleShape2D" id="RectangleShape2D_knagl"]
-
 [node name="Scene1" type="Node2D"]
 
 [node name="Character" type="RigidBody2D" parent="."]
@@ -31,7 +31,6 @@ lock_rotation = true
 contact_monitor = true
 max_contacts_reported = 10
 script = ExtResource("1_3sd7o")
-max_jump_magnitude = 1000.0
 
 [node name="Sprite2D" type="Sprite2D" parent="Character"]
 texture = SubResource("GradientTexture2D_3sd7o")
@@ -61,31 +60,19 @@ region_rect = Rect2(0, 0, 10000, 10000)
 position = Vector2(25, 310)
 scale = Vector2(141.51268, 4.8887)
 
-[node name="Ceiling" parent="Terrain" instance=ExtResource("3_1abo5")]
-visible = false
-position = Vector2(35, -1080)
-scale = Vector2(141.51268, 4.8887)
-
 [node name="RightWall" parent="Terrain" instance=ExtResource("3_1abo5")]
-position = Vector2(1384, -385)
-scale = Vector2(6.427, 74.387)
+position = Vector2(1384, -9641)
+scale = Vector2(6.427, 1000)
 
 [node name="LeftWall" parent="Terrain" instance=ExtResource("3_1abo5")]
-position = Vector2(-1347.9995, -385.00003)
-scale = Vector2(6.427, 74.387)
+position = Vector2(-1348, -9641)
+scale = Vector2(6.427, 1000)
 
 [node name="Ledge" parent="Terrain" instance=ExtResource("4_knagl")]
+visible = false
 z_index = -10
 position = Vector2(-0.00012207031, -1)
 scale = Vector2(140.64, 2.6800003)
 
-[node name="StaticBody2D" type="StaticBody2D" parent="Terrain/Ledge"]
-position = Vector2(8.6796297e-07, 0.3731343)
-scale = Vector2(0.0071103526, 0.3731343)
-collision_layer = 0
-collision_mask = 2
-
-[node name="CollisionShape2D" type="CollisionShape2D" parent="Terrain/Ledge/StaticBody2D"]
-position = Vector2(-0.00012207031, -1)
-scale = Vector2(140.64, 2.6800003)
-shape = SubResource("RectangleShape2D_knagl")
+[node name="LedgeSpawner" parent="." instance=ExtResource("5_4nmru")]
+script = ExtResource("6_05u5g")
