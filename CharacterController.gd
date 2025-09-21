@@ -1,7 +1,7 @@
 extends RigidBody2D
 
 @export var jump_velocity: float = 150
-@export var max_jump_magnitude: float = 1000
+@export var max_jump_magnitude: float = 3000
 @export var camera_panning: float = 0.2
 @export var camera_reset_speed: float = 20
 @export var bonk_velocity: float = 10
@@ -47,7 +47,6 @@ func _physics_process(delta: float) -> void:
 				click_position = mouse_pos
 				
 			if colliding_ledge:
-				print(last_click_time, " - ", calc_ledge_window())
 				if last_click_time >= 0 and last_click_time <= calc_ledge_window():
 					last_click_time = -1
 					click_position = mouse_pos
@@ -83,16 +82,12 @@ func _process(_delta):
 	hint_positions.clear()
 	var mouse_pos: Vector2 = get_viewport().get_mouse_position()
 	
-	if click_position:
-		$Camera2D.offset = (mouse_pos - click_position) * camera_panning
-		
+	if click_position:		
 		var vel = calc_jump_vector(click_position - mouse_pos)
 		for i in range(num_hints):
 			var t = i * 0.1
 			var pos = position + vel * t + 0.5 * Vector2(0, body_gravity) * t * t
 			hint_positions.append(pos)
-	else:
-		$Camera2D.offset = $Camera2D.offset.move_toward(Vector2.ZERO, camera_reset_speed)
 	
 	queue_redraw()
 

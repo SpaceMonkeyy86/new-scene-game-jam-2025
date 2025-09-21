@@ -31,6 +31,7 @@ lock_rotation = true
 contact_monitor = true
 max_contacts_reported = 10
 script = ExtResource("1_3sd7o")
+max_jump_magnitude = 1000.0
 
 [node name="Sprite2D" type="Sprite2D" parent="Character"]
 texture = SubResource("GradientTexture2D_3sd7o")
@@ -41,9 +42,10 @@ shape = SubResource("CircleShape2D_1abo5")
 
 [node name="Camera2D" type="Camera2D" parent="Character"]
 limit_left = -1400
-limit_top = -1100
 limit_right = 1450
 limit_bottom = 350
+limit_smoothed = true
+position_smoothing_enabled = true
 
 [node name="Background" type="Sprite2D" parent="."]
 show_behind_parent = true
