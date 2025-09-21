@@ -47,7 +47,7 @@ func _ready():
 
 func _physics_process(delta: float) -> void:
 	if Input.is_action_pressed("click") and debug_mode:
-		linear_velocity = Vector2(0, -1000)
+		linear_velocity = Vector2(0, -5000)
 		return
 	
 	var mouse_pos: Vector2 = get_viewport().get_mouse_position()
@@ -110,6 +110,11 @@ func calc_ledge_window() -> float:
 
 
 func _process(_delta):
+	if position.y < -12550:
+		get_tree().change_scene_to_file("res://winner.tscn")
+		get_parent().queue_free()
+		return
+	
 	hint_positions.clear()
 	var mouse_pos: Vector2 = get_viewport().get_mouse_position()
 			

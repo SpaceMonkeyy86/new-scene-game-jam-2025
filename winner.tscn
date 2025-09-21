@@ -1,0 +1,71 @@
+[gd_scene load_steps=6 format=3 uid="uid://draocx4ipotu8"]
+
+[ext_resource type="Script" uid="uid://b72tlqlh0ghr6" path="res://winner.gd" id="1_d3ia8"]
+[ext_resource type="Texture2D" uid="uid://pdnmhvjtjdp6" path="res://pixilart-frames/pixil-frame-0.png" id="2_rnxuv"]
+[ext_resource type="Texture2D" uid="uid://c5xqduxp6tllj" path="res://heart.png" id="3_dtg64"]
+[ext_resource type="Texture2D" uid="uid://b687yq6ufpfvp" path="res://dog.png" id="4_yfl3x"]
+
+[sub_resource type="ImageTexture" id="ImageTexture_dtg64"]
+
+[node name="Win!" type="Control"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_d3ia8")
+
+[node name="TextureRect" type="TextureRect" parent="."]
+layout_mode = 0
+offset_left = 1049.0001
+offset_top = 50.00003
+offset_right = 1649.0001
+offset_bottom = 650.0
+scale = Vector2(2.7705665, 2.7705665)
+texture = ExtResource("2_rnxuv")
+
+[node name="Label" type="Label" parent="."]
+layout_mode = 0
+offset_left = 1180.0
+offset_top = 239.0
+offset_right = 1829.0
+offset_bottom = 444.0
+theme_override_colors/font_color = Color(0.39829648, 0.92496157, 0.32129505, 1)
+theme_override_font_sizes/font_size = 150
+text = "Winner!!!"
+
+[node name="TextureRect2" type="TextureRect" parent="."]
+layout_mode = 0
+offset_left = 742.0
+offset_top = 122.0
+offset_right = 782.0
+offset_bottom = 162.0
+texture = SubResource("ImageTexture_dtg64")
+
+[node name="Heart" type="Sprite2D" parent="."]
+position = Vector2(1495, 608)
+scale = Vector2(0.40000123, 0.40000123)
+texture = ExtResource("3_dtg64")
+
+[node name="Heart2" type="Sprite2D" parent="."]
+position = Vector2(1361, 678)
+scale = Vector2(0.40000123, 0.40000123)
+texture = ExtResource("3_dtg64")
+flip_h = true
+
+[node name="Dog" type="Sprite2D" parent="."]
+position = Vector2(1054.0001, 882)
+scale = Vector2(13.240003, 13.240003)
+texture = ExtResource("4_yfl3x")
+flip_h = true
+
+[node name="Button" type="Button" parent="."]
+layout_mode = 0
+offset_left = 1253.0
+offset_top = 1266.0
+offset_right = 1786.0
+offset_bottom = 1479.0
+theme_override_colors/font_color = Color(0.62157047, 0.93215406, 0.41099712, 1)
+theme_override_font_sizes/font_size = 150
+text = "Restart"
