@@ -36,6 +36,7 @@ script = ExtResource("1_3sd7o")
 texture = SubResource("GradientTexture2D_3sd7o")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Character"]
+scale = Vector2(2.9, 2.9)
 shape = SubResource("CircleShape2D_1abo5")
 
 [node name="Camera2D" type="Camera2D" parent="Character"]
@@ -54,21 +55,22 @@ region_rect = Rect2(0, 0, 10000, 10000)
 
 [node name="Terrain" type="Node2D" parent="."]
 
-[node name="Wall" parent="Terrain" instance=ExtResource("3_1abo5")]
+[node name="Ground" parent="Terrain" instance=ExtResource("3_1abo5")]
 position = Vector2(25, 310)
 scale = Vector2(141.51268, 4.8887)
 
-[node name="Wall2" parent="Terrain" instance=ExtResource("3_1abo5")]
+[node name="Ceiling" parent="Terrain" instance=ExtResource("3_1abo5")]
+visible = false
 position = Vector2(35, -1080)
 scale = Vector2(141.51268, 4.8887)
 
-[node name="Wall3" parent="Terrain" instance=ExtResource("3_1abo5")]
-position = Vector2(1391.9998, -352)
-scale = Vector2(9.282445, 78.70099)
+[node name="RightWall" parent="Terrain" instance=ExtResource("3_1abo5")]
+position = Vector2(1384, -385)
+scale = Vector2(6.427, 74.387)
 
-[node name="Wall4" parent="Terrain" instance=ExtResource("3_1abo5")]
-position = Vector2(-1347.9995, -377.00003)
-scale = Vector2(9.282445, 78.70099)
+[node name="LeftWall" parent="Terrain" instance=ExtResource("3_1abo5")]
+position = Vector2(-1347.9995, -385.00003)
+scale = Vector2(6.427, 74.387)
 
 [node name="Ledge" parent="Terrain" instance=ExtResource("4_knagl")]
 z_index = -10
