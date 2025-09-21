@@ -14,32 +14,70 @@ var hint_positions: Array[Vector2] = []
 var project_gravity = ProjectSettings.get_setting("physics/2d/default_gravity")
 var body_gravity = project_gravity * gravity_scale
 
-func with_parent(node) -> bool:
-	return node.find_parent("Ledge")
+var last_click_time: float = -1.0
+var ledge_catch_window: float = 0.0
+var ledge_caught: bool = false
 
 func _physics_process(delta: float) -> void:
 	var mouse_pos: Vector2 = get_viewport().get_mouse_position()
 
-	var colliding = null
+	var colliding_ledge = false
+	var colliding_wall = false
+
 	for body in get_colliding_bodies():
 		if body.find_parent("Ledge"):
-			colliding = body.find_parent("Ledge")
-		
-	if colliding:
-		print(colliding)
-		print(Input.is_action_pressed("click") and colliding)
-		
-	if Input.is_action_pressed("click") and colliding:
-		linear_velocity = Vector2(0, 1)
-		
-	if Input.is_action_just_pressed("click"):
-		click_position = mouse_pos
+			colliding_ledge = true
+		elif body.find_parent("Wall"):
+			colliding_wall = true
 
-	elif Input.is_action_just_released("click") and click_position:
-		freeze = false
-		linear_velocity = Vector2.ZERO
-		apply_impulse(calc_jump_vector(click_position - mouse_pos))
+	if not (colliding_ledge or colliding_wall or ledge_caught):
 		click_position = null
+
+	if Input.is_action_just_pressed("click"):
+		last_click_time = 0.0
+		ledge_catch_window = calc_ledge_window()
+
+	if last_click_time >= 0.0:
+		last_click_time += delta
+		if last_click_time > ledge_catch_window:
+			last_click_time = -1.0
+			click_position = null
+			
+	if Input.is_action_pressed("click"):
+		if click_position == null:
+			if colliding_wall:
+				last_click_time = -1
+				click_position = mouse_pos
+				
+			if colliding_ledge and last_click_time <= ledge_catch_window and last_click_time >= 0:
+				last_click_time = -1
+				click_position = mouse_pos
+				ledge_caught = true
+				
+		if click_position and colliding_ledge:
+			linear_velocity = Vector2(0, 1)
+			
+		if click_position and not (colliding_ledge or colliding_wall):
+			click_position = null
+			ledge_caught = false
+
+	if Input.is_action_just_released("click") and click_position:
+		if colliding_wall:
+			jump_from(mouse_pos)
+		elif colliding_ledge and ledge_caught:
+			jump_from(mouse_pos)
+
+func jump_from(mouse_pos: Vector2) -> void:
+	linear_velocity = Vector2.ZERO
+	apply_impulse(calc_jump_vector(click_position - mouse_pos))
+	click_position = null
+
+
+func calc_ledge_window() -> float:
+	var speed = linear_velocity.y
+	print(speed, " - ", clamp(0.3 - (speed / 1000.0) * 0.25, 0.1, 0.7))
+	return clamp((1 - speed / 1000.0) * 0.9, 0.1, 0.7)
+
 
 func _process(_delta):
 	hint_positions.clear()
