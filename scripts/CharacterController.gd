@@ -103,7 +103,7 @@ func _physics_process(delta: float) -> void:
 			click_position = null
 			ledge_caught = false
 
-	if Input.is_action_just_released("click") and click_position:
+	if Input.is_action_just_released("click") and click_position :
 		if colliding_ground:
 			jump_from(mouse_pos)
 		elif colliding_ledge and ledge_caught:
@@ -111,8 +111,10 @@ func _physics_process(delta: float) -> void:
 
 func jump_from(mouse_pos: Vector2) -> void:
 	linear_velocity = Vector2.ZERO
-	apply_impulse(calc_jump_vector(click_position - mouse_pos))
+	var vel = calc_jump_vector(click_position - mouse_pos)
 	click_position = null
+	if vel.y < -10 or vel.y > 10:
+		apply_impulse(vel)
 
 
 func calc_ledge_window() -> float:
@@ -167,10 +169,12 @@ func _process(_delta):
 	
 	if click_position:		
 		var vel = calc_jump_vector(click_position - mouse_pos)
-		for i in range(1, num_hints + 1):
-			var t = i * 0.1
-			var pos = position + vel * t + 0.5 * Vector2(0, body_gravity) * t * t
-			hint_positions.append(pos)
+
+		if vel.y < -10 or vel.y > 10:
+			for i in range(1, num_hints + 1):
+				var t = i * 0.1
+				var pos = position + vel * t + 0.5 * Vector2(0, body_gravity) * t * t
+				hint_positions.append(pos)
 			
 		if vel.x > 0:
 			sprite.flip_h = true

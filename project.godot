@@ -20,9 +20,9 @@ run/main_scene="uid://b2hcjbtmi61t0"
 config/features=PackedStringArray("4.5", "Forward Plus")
 run/max_fps=60
 boot_splash/image="uid://pdnmhvjtjdp6"
-config/icon="uid://pdnmhvjtjdp6"
-config/macos_native_icon="uid://pdnmhvjtjdp6"
-config/windows_native_icon="uid://pdnmhvjtjdp6"
+config/icon="uid://byqwas4hw2xxl"
+config/macos_native_icon="uid://byqwas4hw2xxl"
+config/windows_native_icon="uid://byqwas4hw2xxl"
 
 [display]
 

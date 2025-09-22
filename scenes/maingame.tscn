@@ -1,4 +1,4 @@
-[gd_scene load_steps=13 format=3 uid="uid://b2hcjbtmi61t0"]
+[gd_scene load_steps=16 format=3 uid="uid://b2hcjbtmi61t0"]
 
 [ext_resource type="Script" uid="uid://cdpa4roxlubnf" path="res://scripts/CharacterController.gd" id="1_olu43"]
 [ext_resource type="Script" uid="uid://bs5xid5367nv0" path="res://addons/konamicode/konamicode.gd" id="2_w5oa7"]
@@ -10,6 +10,9 @@
 [ext_resource type="Script" uid="uid://djr0chcxeyflq" path="res://scripts/ledge_spawner.gd" id="8_f0ocn"]
 [ext_resource type="Texture2D" uid="uid://b84hiibsdosew" path="res://assets/stackable-wall.png" id="9_yopyy"]
 [ext_resource type="Texture2D" uid="uid://sm3gx7r4vxpv" path="res://assets/rain.png" id="10_q45tq"]
+[ext_resource type="Texture2D" uid="uid://bykro8l5mcbf4" path="res://assets/progressbar.png" id="11_vlyvo"]
+[ext_resource type="Texture2D" uid="uid://j8m56jk6txdh" path="res://assets/progresstick.png" id="12_jlsc5"]
+[ext_resource type="Script" uid="uid://7cltgd2g0a8f" path="res://scripts/progressbar.gd" id="13_mu2ks"]
 
 [sub_resource type="PhysicsMaterial" id="PhysicsMaterial_3xosi"]
 
@@ -40,16 +43,18 @@ texture = ExtResource("3_4y8sd")
 scale = Vector2(2.9, 2.9)
 shape = SubResource("CircleShape2D_1abo5")
 
+[node name="AudioStreamPlayer2D" type="AudioStreamPlayer2D" parent="Character"]
+
 [node name="Camera2D" type="Camera2D" parent="Character"]
+position = Vector2(0, -215)
 scale = Vector2(1.5, 1.5)
-limit_left = -1000
-limit_top = -12500
-limit_right = 1000
-limit_bottom = 350
+zoom = Vector2(0.576, 0.576)
+limit_left = -999
+limit_top = -12498
+limit_right = 1001
+limit_bottom = 352
 limit_smoothed = true
 position_smoothing_enabled = true
-
-[node name="AudioStreamPlayer2D" type="AudioStreamPlayer2D" parent="Character"]
 
 [node name="Background" type="Sprite2D" parent="."]
 show_behind_parent = true
@@ -64,7 +69,7 @@ region_rect = Rect2(0, 0, 250, 230)
 [node name="Terrain" type="Node2D" parent="."]
 
 [node name="Ground" parent="Terrain" instance=ExtResource("5_md8dm")]
-position = Vector2(25.000002, 303)
+position = Vector2(25.000002, 304)
 scale = Vector2(85, 4.889)
 
 [node name="Sprite2D2" type="Sprite2D" parent="Terrain/Ground"]
@@ -100,6 +105,24 @@ lifetime = 5.2
 emission_shape = 3
 emission_rect_extents = Vector2(7.5, 1)
 scale_amount_max = 5.0
-color = Color(0.7395728, 0.57413405, 0.06524194, 0.46666667)
+color = Color(0.35204986, 0.68289965, 0.4370389, 0.34509805)
 hue_variation_min = -0.2
 hue_variation_max = 0.35
+
+[node name="CanvasLayer" type="CanvasLayer" parent="."]
+
+[node name="TextureProgressBar" type="TextureProgressBar" parent="CanvasLayer"]
+offset_left = 1077.0
+offset_top = 36.0
+offset_right = 1117.0
+offset_bottom = 132.0
+scale = Vector2(4.5, 6)
+step = 0.05
+value = 5.0
+fill_mode = 3
+texture_under = ExtResource("11_vlyvo")
+texture_progress = ExtResource("12_jlsc5")
+texture_progress_offset = Vector2(1, 1)
+tint_under = Color(1, 1, 1, 0.75686276)
+tint_progress = Color(1, 1, 1, 0.6431373)
+script = ExtResource("13_mu2ks")
