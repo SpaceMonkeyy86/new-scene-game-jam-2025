@@ -1,0 +1,105 @@
+[gd_scene load_steps=13 format=3 uid="uid://b2hcjbtmi61t0"]
+
+[ext_resource type="Script" uid="uid://cdpa4roxlubnf" path="res://scripts/CharacterController.gd" id="1_olu43"]
+[ext_resource type="Script" uid="uid://bs5xid5367nv0" path="res://addons/konamicode/konamicode.gd" id="2_w5oa7"]
+[ext_resource type="Texture2D" uid="uid://pdnmhvjtjdp6" path="res://assets/slime-frames/pixil-frame-0.png" id="3_4y8sd"]
+[ext_resource type="Texture2D" uid="uid://sjm8stf3jdbc" path="res://assets/pixil-frame-0_15.png" id="4_rvkpk"]
+[ext_resource type="PackedScene" uid="uid://cx6qt30ysfcp" path="res://scenes/wall.tscn" id="5_md8dm"]
+[ext_resource type="Texture2D" uid="uid://py3tj3l354kp" path="res://assets/ground.png" id="6_wy1l4"]
+[ext_resource type="PackedScene" uid="uid://beraiaavb7ojo" path="res://scenes/ledge_spawner.tscn" id="7_hhwgs"]
+[ext_resource type="Script" uid="uid://djr0chcxeyflq" path="res://scripts/ledge_spawner.gd" id="8_f0ocn"]
+[ext_resource type="Texture2D" uid="uid://b84hiibsdosew" path="res://assets/stackable-wall.png" id="9_yopyy"]
+[ext_resource type="Texture2D" uid="uid://sm3gx7r4vxpv" path="res://assets/rain.png" id="10_q45tq"]
+
+[sub_resource type="PhysicsMaterial" id="PhysicsMaterial_3xosi"]
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_1abo5"]
+
+[node name="Scene1" type="Node2D"]
+
+[node name="Character" type="RigidBody2D" parent="."]
+z_index = 4
+collision_layer = 3
+collision_mask = 3
+physics_material_override = SubResource("PhysicsMaterial_3xosi")
+lock_rotation = true
+contact_monitor = true
+max_contacts_reported = 10
+script = ExtResource("1_olu43")
+
+[node name="KonamiCode" type="Node" parent="Character"]
+script = ExtResource("2_w5oa7")
+metadata/_custom_type_script = "uid://bs5xid5367nv0"
+
+[node name="Sprite2D" type="Sprite2D" parent="Character"]
+position = Vector2(1, -3)
+scale = Vector2(0.3, 0.3)
+texture = ExtResource("3_4y8sd")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Character"]
+scale = Vector2(2.9, 2.9)
+shape = SubResource("CircleShape2D_1abo5")
+
+[node name="Camera2D" type="Camera2D" parent="Character"]
+scale = Vector2(1.5, 1.5)
+limit_left = -1000
+limit_top = -12500
+limit_right = 1000
+limit_bottom = 350
+limit_smoothed = true
+position_smoothing_enabled = true
+
+[node name="AudioStreamPlayer2D" type="AudioStreamPlayer2D" parent="Character"]
+
+[node name="Background" type="Sprite2D" parent="."]
+show_behind_parent = true
+z_index = -100
+texture_repeat = 1
+position = Vector2(0, -911.00006)
+scale = Vector2(8, 11)
+texture = ExtResource("4_rvkpk")
+region_enabled = true
+region_rect = Rect2(0, 0, 250, 230)
+
+[node name="Terrain" type="Node2D" parent="."]
+
+[node name="Ground" parent="Terrain" instance=ExtResource("5_md8dm")]
+position = Vector2(25.000002, 303)
+scale = Vector2(85, 4.889)
+
+[node name="Sprite2D2" type="Sprite2D" parent="Terrain/Ground"]
+position = Vector2(-0.23529413, -116.179184)
+scale = Vector2(0.078, 1)
+texture = ExtResource("6_wy1l4")
+
+[node name="RightWall" parent="Terrain" instance=ExtResource("5_md8dm")]
+position = Vector2(909, -9644.001)
+scale = Vector2(6.427, 1000)
+
+[node name="LeftWall" parent="Terrain" instance=ExtResource("5_md8dm")]
+position = Vector2(-891.99994, -9648)
+scale = Vector2(6.427, 1000)
+
+[node name="LedgeSpawner" parent="." instance=ExtResource("7_hhwgs")]
+script = ExtResource("8_f0ocn")
+
+[node name="BackgroundStacker" type="Sprite2D" parent="."]
+texture_repeat = 2
+position = Vector2(0, -7104)
+scale = Vector2(8, 11)
+texture = ExtResource("9_yopyy")
+region_enabled = true
+region_rect = Rect2(0, 0, 250, 1000)
+
+[node name="rain" type="CPUParticles2D" parent="."]
+position = Vector2(0, -12605)
+scale = Vector2(-115.033066, -45.297405)
+amount = 80
+texture = ExtResource("10_q45tq")
+lifetime = 5.2
+emission_shape = 3
+emission_rect_extents = Vector2(7.5, 1)
+scale_amount_max = 5.0
+color = Color(0.7395728, 0.57413405, 0.06524194, 0.46666667)
+hue_variation_min = -0.2
+hue_variation_max = 0.35

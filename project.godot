@@ -11,10 +11,22 @@ config_version=5
 [application]
 
 config/name="Pitfall"
+config/description="New Scene Game Jam 2025 Submission
+You are a slime trying to get back to your dog at the top of a pit. Can you get out? It's a rage game.
+
+Controls:
+Launch by dragging your mouse. To catch a ledge, you must left click while on it. Hold left click to stay on the ledge and to aim. You will fall if you don't launch fast enough."
 run/main_scene="uid://b2hcjbtmi61t0"
 config/features=PackedStringArray("4.5", "Forward Plus")
+run/max_fps=60
 boot_splash/image="uid://pdnmhvjtjdp6"
 config/icon="uid://pdnmhvjtjdp6"
+config/macos_native_icon="uid://pdnmhvjtjdp6"
+config/windows_native_icon="uid://pdnmhvjtjdp6"
+
+[display]
+
+window/stretch/mode="viewport"
 
 [editor]
 
@@ -36,3 +48,4 @@ click={
 [rendering]
 
 textures/canvas_textures/default_texture_filter=0
+textures/vram_compression/import_etc2_astc=true
