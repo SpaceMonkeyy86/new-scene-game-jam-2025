@@ -76,3 +76,9 @@ text = "Restart"
 [node name="AudioStreamPlayer2D" type="AudioStreamPlayer2D" parent="."]
 position = Vector2(-876, -531)
 scale = Vector2(0.5148003, 0.51204824)
+
+[node name="WHITE" type="ColorRect" parent="."]
+layout_mode = 0
+offset_right = 40.0
+offset_bottom = 40.0
+scale = Vector2(28.68, 16.119999)

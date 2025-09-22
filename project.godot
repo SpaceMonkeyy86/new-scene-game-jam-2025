@@ -24,6 +24,10 @@ config/icon="uid://byqwas4hw2xxl"
 config/macos_native_icon="uid://byqwas4hw2xxl"
 config/windows_native_icon="uid://byqwas4hw2xxl"
 
+[autoload]
+
+SingleEntry="*res://scripts/singleentry.gd"
+
 [display]
 
 window/stretch/mode="viewport"

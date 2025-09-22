@@ -15,9 +15,7 @@ var fall2 = preload("res://assets/slime-frames/pixil-frame-13.png")
 var fall3 = preload("res://assets/slime-frames/pixil-frame-14.png")
 var fall4 = preload("res://assets/slime-frames/pixil-frame-15.png")
 
-var bgmusic = preload("res://assets/sounds/dark-atmosphere-with-rain-352570.mp3")
-var powerup = preload("res://assets/sounds/01-power-up-mario.mp3")
-var powerdown = preload("res://assets/sounds/mario-power-down.mp3")
+var bgmusic = preload("res://assets/sounds/bgmusic.mp3")
 
 @export var jump_velocity: float = 150
 @export var max_jump_magnitude: float = 1000
@@ -35,29 +33,10 @@ var last_click_time: float = -1.0
 var ledge_catch_window: float = 0.0
 var ledge_caught: bool = false
 
-var sprite: Sprite2D = null
-
-var debug_mode: bool = false
-
-func _debug_toggle() -> void:
-	if debug_mode:
-		$AudioStreamPlayer2D.stream = powerdown
-	else:
-		$AudioStreamPlayer2D.stream = powerup
-		
-	$AudioStreamPlayer2D.play()
-	
-	debug_mode = !debug_mode
-
-func _ready():
-	sprite = find_child("Sprite2D")
-	if sprite == null:
-		push_error("Something went wrong... Sprite wasn't found!")
-
-	$KonamiCode.success.connect(_debug_toggle)
+@onready var sprite: Sprite2D = find_child("Sprite2D")
 
 func _physics_process(delta: float) -> void:
-	if Input.is_action_pressed("click") and debug_mode:
+	if Input.is_action_pressed("click") and SingleEntry.DEBUG:
 		linear_velocity = Vector2(0, -5000)
 		return
 	
@@ -127,10 +106,14 @@ func _process(_delta):
 		$AudioStreamPlayer2D.stream = bgmusic
 		$AudioStreamPlayer2D.play()
 	
-	if position.y < -12550:
-		get_tree().change_scene_to_file("res://scenes/winner.tscn")
-		get_parent().queue_free()
-		return
+	if position.y < -12600:
+		freeze = true
+		if $/root/Scene1/CanvasLayer/WHITE.color.a < 1:
+			$/root/Scene1/CanvasLayer/WHITE.color.a += 0.1
+		else:
+			get_tree().change_scene_to_file("res://scenes/winner.tscn")
+			get_parent().queue_free()
+			return
 	
 	hint_positions.clear()
 	var mouse_pos: Vector2 = get_viewport().get_mouse_position()
@@ -195,8 +178,8 @@ func _process(_delta):
 
 func calc_jump_vector(offset: Vector2) -> Vector2:
 	var v = offset
-	v.x = log(absf(v.x)+1) * (-1 if v.x < 0 else 1)
-	v.y = log(absf(v.y)+1) * (-1 if v.y < 0 else 1)
+	#v.x = log(absf(v.x)+1) * (-1 if v.x < 0 else 1)
+	#v.y = log(absf(v.y)+1) * (-1 if v.y < 0 else 1)
 	v *= jump_velocity
 	if v.length() > max_jump_magnitude:
 		v = v.normalized() * max_jump_magnitude

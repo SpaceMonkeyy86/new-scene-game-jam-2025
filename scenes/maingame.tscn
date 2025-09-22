@@ -1,8 +1,10 @@
-[gd_scene load_steps=16 format=3 uid="uid://b2hcjbtmi61t0"]
+[gd_scene load_steps=18 format=3 uid="uid://b2hcjbtmi61t0"]
 
+[ext_resource type="Script" uid="uid://cdn0umyoqgbap" path="res://scripts/maingame.gd" id="1_8ja4j"]
 [ext_resource type="Script" uid="uid://cdpa4roxlubnf" path="res://scripts/CharacterController.gd" id="1_olu43"]
 [ext_resource type="Script" uid="uid://bs5xid5367nv0" path="res://addons/konamicode/konamicode.gd" id="2_w5oa7"]
 [ext_resource type="Texture2D" uid="uid://pdnmhvjtjdp6" path="res://assets/slime-frames/pixil-frame-0.png" id="3_4y8sd"]
+[ext_resource type="AudioStream" uid="uid://d351kofl10el" path="res://assets/sounds/bgmusic.mp3" id="3_a4mnq"]
 [ext_resource type="Texture2D" uid="uid://sjm8stf3jdbc" path="res://assets/pixil-frame-0_15.png" id="4_rvkpk"]
 [ext_resource type="PackedScene" uid="uid://cx6qt30ysfcp" path="res://scenes/wall.tscn" id="5_md8dm"]
 [ext_resource type="Texture2D" uid="uid://py3tj3l354kp" path="res://assets/ground.png" id="6_wy1l4"]
@@ -19,6 +21,7 @@
 [sub_resource type="CircleShape2D" id="CircleShape2D_1abo5"]
 
 [node name="Scene1" type="Node2D"]
+script = ExtResource("1_8ja4j")
 
 [node name="Character" type="RigidBody2D" parent="."]
 z_index = 4
@@ -30,10 +33,6 @@ contact_monitor = true
 max_contacts_reported = 10
 script = ExtResource("1_olu43")
 
-[node name="KonamiCode" type="Node" parent="Character"]
-script = ExtResource("2_w5oa7")
-metadata/_custom_type_script = "uid://bs5xid5367nv0"
-
 [node name="Sprite2D" type="Sprite2D" parent="Character"]
 position = Vector2(1, -3)
 scale = Vector2(0.3, 0.3)
@@ -44,6 +43,9 @@ scale = Vector2(2.9, 2.9)
 shape = SubResource("CircleShape2D_1abo5")
 
 [node name="AudioStreamPlayer2D" type="AudioStreamPlayer2D" parent="Character"]
+position = Vector2(0, 200)
+stream = ExtResource("3_a4mnq")
+autoplay = true
 
 [node name="Camera2D" type="Camera2D" parent="Character"]
 position = Vector2(0, -215)
@@ -111,6 +113,12 @@ hue_variation_max = 0.35
 
 [node name="CanvasLayer" type="CanvasLayer" parent="."]
 
+[node name="WHITE" type="ColorRect" parent="CanvasLayer"]
+z_index = 1
+offset_right = 1150.0
+offset_bottom = 650.0
+color = Color(1, 1, 1, 0)
+
 [node name="TextureProgressBar" type="TextureProgressBar" parent="CanvasLayer"]
 offset_left = 1077.0
 offset_top = 36.0
@@ -126,3 +134,9 @@ texture_progress_offset = Vector2(1, 1)
 tint_under = Color(1, 1, 1, 0.75686276)
 tint_progress = Color(1, 1, 1, 0.6431373)
 script = ExtResource("13_mu2ks")
+
+[node name="KonamiCode" type="Node" parent="."]
+script = ExtResource("2_w5oa7")
+metadata/_custom_type_script = "uid://bs5xid5367nv0"
+
+[node name="AudioStreamPlayer2D" type="AudioStreamPlayer2D" parent="."]
